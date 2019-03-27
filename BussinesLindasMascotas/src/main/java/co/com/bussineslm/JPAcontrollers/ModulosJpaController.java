@@ -199,5 +199,20 @@ public class ModulosJpaController implements Serializable {
             em.close();
         }
     }
+
+    public Modulos buscarModuloNombre(String nombreModulo) {
+        EntityManager em = getEntityManager();
+        
+        try {
+            Query q = em.createNamedQuery("Modulos.findByNombreModulo");
+            q.setParameter("nombreModulo", nombreModulo);
+            
+            return(Modulos) q.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }finally{
+            em.close();
+        }
+    }
     
 }

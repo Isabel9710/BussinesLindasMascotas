@@ -251,5 +251,20 @@ public class BarriosJpaController implements Serializable {
             em.close();
         }
     }
+
+    public Barrios buscarBarrioNombre(String nombreBarrio) {
+        EntityManager em = getEntityManager();
+        
+        try {
+            Query q = em.createNamedQuery("Barrios.findByNombreBarrio");
+            q.setParameter("nombreBarrio", nombreBarrio);
+            
+            return (Barrios) q.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }finally{
+            em.close();
+        }
+    }
     
 }

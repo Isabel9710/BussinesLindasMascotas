@@ -33,6 +33,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Usuarios.findByEstado", query = "SELECT u FROM Usuarios u WHERE u.estado = :estado")})
 public class Usuarios implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "rol")
+    private String rol;
+
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
     @NotNull
@@ -121,6 +127,14 @@ public class Usuarios implements Serializable {
     @Override
     public String toString() {
         return "co.com.bussineslm.entities.Usuarios[ correoElectronico=" + correoElectronico + " ]";
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
     
 }

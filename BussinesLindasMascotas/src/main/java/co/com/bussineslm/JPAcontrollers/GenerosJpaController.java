@@ -199,5 +199,20 @@ public class GenerosJpaController implements Serializable {
             em.close();
         }
     }
+
+    public Generos buscarGeneroNombre(String nombreGenero) {
+        EntityManager em = getEntityManager();
+        
+        try {
+            Query q = em.createNamedQuery("Generos.findByNombreGenero", Generos.class);
+            q.setParameter("nombreGenero", nombreGenero);
+            
+            return (Generos)q.getSingleResult();
+        } catch (Exception ex) {
+            return null;
+        }finally{
+            em.close();
+        }
+    }
     
 }

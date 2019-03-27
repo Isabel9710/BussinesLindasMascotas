@@ -199,5 +199,20 @@ public class TiposDocumentosJpaController implements Serializable {
             em.close();
         }
     }
+
+    public TiposDocumentos buscarTipoDocNombre(String nombreTipoDoc) {
+        EntityManager em = getEntityManager();
+        
+        try {
+            Query q = em.createNamedQuery("TiposDocumentos.findByNombreTipoDoc");
+            q.setParameter("nombreTipoDoc", nombreTipoDoc);
+            
+            return (TiposDocumentos) q.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        } finally{
+            em.close();
+        }
+    }
     
 }
