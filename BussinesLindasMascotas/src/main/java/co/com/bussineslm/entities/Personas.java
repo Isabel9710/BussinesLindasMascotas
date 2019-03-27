@@ -47,6 +47,15 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "Personas.findByEstado", query = "SELECT p FROM Personas p WHERE p.estado = :estado")})
 public class Personas implements Serializable {
 
+    @Size(max = 15)
+    @Column(name = "telefono_fijo")
+    private String telefonoFijo;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 15)
+    @Column(name = "telefono_movil")
+    private String telefonoMovil;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -71,12 +80,6 @@ public class Personas implements Serializable {
     @Size(max = 30)
     @Column(name = "direccion")
     private String direccion;
-    @Column(name = "telefono_fijo")
-    private Integer telefonoFijo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "telefono_movil")
-    private long telefonoMovil;
     @Basic(optional = false)
     @NotNull
     @Column(name = "estado")
@@ -109,7 +112,7 @@ public class Personas implements Serializable {
         this.identificacion = identificacion;
     }
 
-    public Personas(Integer identificacion, String nombres, String apellidos, Date fechaNacimiento, long telefonoMovil, boolean estado) {
+    public Personas(Integer identificacion, String nombres, String apellidos, Date fechaNacimiento, String telefonoMovil, boolean estado) {
         this.identificacion = identificacion;
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -156,22 +159,6 @@ public class Personas implements Serializable {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
-    }
-
-    public Integer getTelefonoFijo() {
-        return telefonoFijo;
-    }
-
-    public void setTelefonoFijo(Integer telefonoFijo) {
-        this.telefonoFijo = telefonoFijo;
-    }
-
-    public long getTelefonoMovil() {
-        return telefonoMovil;
-    }
-
-    public void setTelefonoMovil(long telefonoMovil) {
-        this.telefonoMovil = telefonoMovil;
     }
 
     public boolean getEstado() {
@@ -275,6 +262,22 @@ public class Personas implements Serializable {
     @Override
     public String toString() {
         return "co.com.bussineslm.entities.Personas[ identificacion=" + identificacion + " ]";
+    }
+
+    public String getTelefonoFijo() {
+        return telefonoFijo;
+    }
+
+    public void setTelefonoFijo(String telefonoFijo) {
+        this.telefonoFijo = telefonoFijo;
+    }
+
+    public String getTelefonoMovil() {
+        return telefonoMovil;
+    }
+
+    public void setTelefonoMovil(String telefonoMovil) {
+        this.telefonoMovil = telefonoMovil;
     }
     
 }

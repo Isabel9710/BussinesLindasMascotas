@@ -190,8 +190,8 @@ public class SetDataToBD {
                 persona.setIdGenero(g);
                 persona.setIdBarrio(b);
                 persona.setDireccion("RODEO ALTO");
-                persona.setTelefonoFijo(5776165);
-                persona.setTelefonoMovil(301395865);
+                persona.setTelefonoFijo("5776165");
+                persona.setTelefonoMovil("3013958651");
                 persona.setIdPerfil(perf);
                 persona.setEstado(true);
                 
