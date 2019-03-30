@@ -38,6 +38,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "Perfiles.findByNombrePerfil", query = "SELECT p FROM Perfiles p WHERE p.nombrePerfil = :nombrePerfil")})
 public class Perfiles implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPerfil")
+    private List<Usuarios> usuariosList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -123,6 +126,16 @@ public class Perfiles implements Serializable {
     @Override
     public String toString() {
         return "co.com.bussineslm.entities.Perfiles[ idPerfil=" + idPerfil + " ]";
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<Usuarios> getUsuariosList() {
+        return usuariosList;
+    }
+
+    public void setUsuariosList(List<Usuarios> usuariosList) {
+        this.usuariosList = usuariosList;
     }
     
 }

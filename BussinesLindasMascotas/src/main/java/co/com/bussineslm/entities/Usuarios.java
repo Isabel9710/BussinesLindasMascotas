@@ -33,6 +33,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Usuarios.findByEstado", query = "SELECT u FROM Usuarios u WHERE u.estado = :estado")})
 public class Usuarios implements Serializable {
 
+    @JoinColumn(name = "id_perfil", referencedColumnName = "id_perfil")
+    @ManyToOne(optional = false)
+    private Perfiles idPerfil;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -135,6 +139,14 @@ public class Usuarios implements Serializable {
 
     public void setRol(String rol) {
         this.rol = rol;
+    }
+
+    public Perfiles getIdPerfil() {
+        return idPerfil;
+    }
+
+    public void setIdPerfil(Perfiles idPerfil) {
+        this.idPerfil = idPerfil;
     }
     
 }

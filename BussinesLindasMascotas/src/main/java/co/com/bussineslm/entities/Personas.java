@@ -96,9 +96,6 @@ public class Personas implements Serializable {
     @JoinColumn(name = "id_genero", referencedColumnName = "id_genero")
     @ManyToOne(optional = false)
     private Generos idGenero;
-    @JoinColumn(name = "id_perfil", referencedColumnName = "id_perfil")
-    @ManyToOne(optional = false)
-    private Perfiles idPerfil;
     @JoinColumn(name = "tipo_documento", referencedColumnName = "id_tipo_doc")
     @ManyToOne(optional = false)
     private TiposDocumentos tipoDocumento;
@@ -211,14 +208,6 @@ public class Personas implements Serializable {
 
     public void setIdGenero(Generos idGenero) {
         this.idGenero = idGenero;
-    }
-
-    public Perfiles getIdPerfil() {
-        return idPerfil;
-    }
-
-    public void setIdPerfil(Perfiles idPerfil) {
-        this.idPerfil = idPerfil;
     }
 
     public TiposDocumentos getTipoDocumento() {

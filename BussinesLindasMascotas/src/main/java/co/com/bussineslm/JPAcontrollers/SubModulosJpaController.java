@@ -228,19 +228,5 @@ public class SubModulosJpaController implements Serializable {
             em.close();
         }
     }
-
-    public SubModulos buscarSubModuloNombre(String nombreSubmodulo) {
-        EntityManager em = getEntityManager();
-        
-        try {
-            Query q = em.createNamedQuery("SubModulos.findByNombreSubmodulo");
-            q.setParameter("nombreSubmodulo", nombreSubmodulo);
-            
-            return (SubModulos) q.getSingleResult();
-        } catch (Exception e) {
-            return null;
-        } finally{
-            em.close();
-        }
-    }
+    
 }

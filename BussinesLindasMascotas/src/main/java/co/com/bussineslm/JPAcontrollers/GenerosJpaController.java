@@ -199,7 +199,7 @@ public class GenerosJpaController implements Serializable {
             em.close();
         }
     }
-
+    
     public Generos buscarGeneroNombre(String nombreGenero) {
         EntityManager em = getEntityManager();
         
@@ -212,7 +212,7 @@ public class GenerosJpaController implements Serializable {
             return null;
         }finally{
             em.close();
-        }
+}
     }
     
 }

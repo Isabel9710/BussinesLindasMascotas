@@ -14,7 +14,6 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import co.com.bussineslm.entities.Permisos;
-import co.com.bussineslm.entities.Personas;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -36,9 +35,6 @@ public class PerfilesJpaController implements Serializable {
     }
 
     public void create(Perfiles perfiles) {
-        if (perfiles.getPersonasList() == null) {
-            perfiles.setPersonasList(new ArrayList<Personas>());
-        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -48,12 +44,6 @@ public class PerfilesJpaController implements Serializable {
                 permisos = em.getReference(permisos.getClass(), permisos.getIdPermiso());
                 perfiles.setPermisos(permisos);
             }
-            List<Personas> attachedPersonasList = new ArrayList<Personas>();
-            for (Personas personasListPersonasToAttach : perfiles.getPersonasList()) {
-                personasListPersonasToAttach = em.getReference(personasListPersonasToAttach.getClass(), personasListPersonasToAttach.getIdentificacion());
-                attachedPersonasList.add(personasListPersonasToAttach);
-            }
-            perfiles.setPersonasList(attachedPersonasList);
             em.persist(perfiles);
             if (permisos != null) {
                 Perfiles oldIdPerfilOfPermisos = permisos.getIdPerfil();
@@ -63,15 +53,6 @@ public class PerfilesJpaController implements Serializable {
                 }
                 permisos.setIdPerfil(perfiles);
                 permisos = em.merge(permisos);
-            }
-            for (Personas personasListPersonas : perfiles.getPersonasList()) {
-                Perfiles oldIdPerfilOfPersonasListPersonas = personasListPersonas.getIdPerfil();
-                personasListPersonas.setIdPerfil(perfiles);
-                personasListPersonas = em.merge(personasListPersonas);
-                if (oldIdPerfilOfPersonasListPersonas != null) {
-                    oldIdPerfilOfPersonasListPersonas.getPersonasList().remove(personasListPersonas);
-                    oldIdPerfilOfPersonasListPersonas = em.merge(oldIdPerfilOfPersonasListPersonas);
-                }
             }
             em.getTransaction().commit();
         } finally {
@@ -89,22 +70,12 @@ public class PerfilesJpaController implements Serializable {
             Perfiles persistentPerfiles = em.find(Perfiles.class, perfiles.getIdPerfil());
             Permisos permisosOld = persistentPerfiles.getPermisos();
             Permisos permisosNew = perfiles.getPermisos();
-            List<Personas> personasListOld = persistentPerfiles.getPersonasList();
-            List<Personas> personasListNew = perfiles.getPersonasList();
             List<String> illegalOrphanMessages = null;
             if (permisosOld != null && !permisosOld.equals(permisosNew)) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
                 illegalOrphanMessages.add("You must retain Permisos " + permisosOld + " since its idPerfil field is not nullable.");
-            }
-            for (Personas personasListOldPersonas : personasListOld) {
-                if (!personasListNew.contains(personasListOldPersonas)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Personas " + personasListOldPersonas + " since its idPerfil field is not nullable.");
-                }
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
@@ -113,13 +84,6 @@ public class PerfilesJpaController implements Serializable {
                 permisosNew = em.getReference(permisosNew.getClass(), permisosNew.getIdPermiso());
                 perfiles.setPermisos(permisosNew);
             }
-            List<Personas> attachedPersonasListNew = new ArrayList<Personas>();
-            for (Personas personasListNewPersonasToAttach : personasListNew) {
-                personasListNewPersonasToAttach = em.getReference(personasListNewPersonasToAttach.getClass(), personasListNewPersonasToAttach.getIdentificacion());
-                attachedPersonasListNew.add(personasListNewPersonasToAttach);
-            }
-            personasListNew = attachedPersonasListNew;
-            perfiles.setPersonasList(personasListNew);
             perfiles = em.merge(perfiles);
             if (permisosNew != null && !permisosNew.equals(permisosOld)) {
                 Perfiles oldIdPerfilOfPermisos = permisosNew.getIdPerfil();
@@ -129,17 +93,6 @@ public class PerfilesJpaController implements Serializable {
                 }
                 permisosNew.setIdPerfil(perfiles);
                 permisosNew = em.merge(permisosNew);
-            }
-            for (Personas personasListNewPersonas : personasListNew) {
-                if (!personasListOld.contains(personasListNewPersonas)) {
-                    Perfiles oldIdPerfilOfPersonasListNewPersonas = personasListNewPersonas.getIdPerfil();
-                    personasListNewPersonas.setIdPerfil(perfiles);
-                    personasListNewPersonas = em.merge(personasListNewPersonas);
-                    if (oldIdPerfilOfPersonasListNewPersonas != null && !oldIdPerfilOfPersonasListNewPersonas.equals(perfiles)) {
-                        oldIdPerfilOfPersonasListNewPersonas.getPersonasList().remove(personasListNewPersonas);
-                        oldIdPerfilOfPersonasListNewPersonas = em.merge(oldIdPerfilOfPersonasListNewPersonas);
-                    }
-                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -177,13 +130,6 @@ public class PerfilesJpaController implements Serializable {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
                 illegalOrphanMessages.add("This Perfiles (" + perfiles + ") cannot be destroyed since the Permisos " + permisosOrphanCheck + " in its permisos field has a non-nullable idPerfil field.");
-            }
-            List<Personas> personasListOrphanCheck = perfiles.getPersonasList();
-            for (Personas personasListOrphanCheckPersonas : personasListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Perfiles (" + perfiles + ") cannot be destroyed since the Personas " + personasListOrphanCheckPersonas + " in its personasList field has a non-nullable idPerfil field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
@@ -242,7 +188,7 @@ public class PerfilesJpaController implements Serializable {
             em.close();
         }
     }
-
+    
     public Perfiles buscarPerfilNombre(String nombrePerfil) {
         EntityManager em = getEntityManager();
         
@@ -255,6 +201,6 @@ public class PerfilesJpaController implements Serializable {
             return null;
         }finally{
             em.close();
-        }
+}
     }
 }

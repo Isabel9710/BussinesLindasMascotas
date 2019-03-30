@@ -199,7 +199,7 @@ public class TiposDocumentosJpaController implements Serializable {
             em.close();
         }
     }
-
+    
     public TiposDocumentos buscarTipoDocNombre(String nombreTipoDoc) {
         EntityManager em = getEntityManager();
         
@@ -212,7 +212,7 @@ public class TiposDocumentosJpaController implements Serializable {
             return null;
         } finally{
             em.close();
-        }
+}
     }
     
 }

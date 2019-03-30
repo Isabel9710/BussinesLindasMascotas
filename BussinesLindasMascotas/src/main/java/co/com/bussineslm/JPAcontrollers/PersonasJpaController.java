@@ -16,7 +16,6 @@ import javax.persistence.criteria.Root;
 import co.com.bussineslm.entities.InformacionLaboral;
 import co.com.bussineslm.entities.Barrios;
 import co.com.bussineslm.entities.Generos;
-import co.com.bussineslm.entities.Perfiles;
 import co.com.bussineslm.entities.TiposDocumentos;
 import co.com.bussineslm.entities.Usuarios;
 import java.util.ArrayList;
@@ -71,11 +70,6 @@ public class PersonasJpaController implements Serializable {
                 idGenero = em.getReference(idGenero.getClass(), idGenero.getIdGenero());
                 personas.setIdGenero(idGenero);
             }
-            Perfiles idPerfil = personas.getIdPerfil();
-            if (idPerfil != null) {
-                idPerfil = em.getReference(idPerfil.getClass(), idPerfil.getIdPerfil());
-                personas.setIdPerfil(idPerfil);
-            }
             TiposDocumentos tipoDocumento = personas.getTipoDocumento();
             if (tipoDocumento != null) {
                 tipoDocumento = em.getReference(tipoDocumento.getClass(), tipoDocumento.getIdTipoDoc());
@@ -116,10 +110,6 @@ public class PersonasJpaController implements Serializable {
             if (idGenero != null) {
                 idGenero.getPersonasList().add(personas);
                 idGenero = em.merge(idGenero);
-            }
-            if (idPerfil != null) {
-                idPerfil.getPersonasList().add(personas);
-                idPerfil = em.merge(idPerfil);
             }
             if (tipoDocumento != null) {
                 tipoDocumento.getPersonasList().add(personas);
@@ -177,8 +167,6 @@ public class PersonasJpaController implements Serializable {
             Barrios idBarrioNew = personas.getIdBarrio();
             Generos idGeneroOld = persistentPersonas.getIdGenero();
             Generos idGeneroNew = personas.getIdGenero();
-            Perfiles idPerfilOld = persistentPersonas.getIdPerfil();
-            Perfiles idPerfilNew = personas.getIdPerfil();
             TiposDocumentos tipoDocumentoOld = persistentPersonas.getTipoDocumento();
             TiposDocumentos tipoDocumentoNew = personas.getTipoDocumento();
             List<Usuarios> usuariosListOld = persistentPersonas.getUsuariosList();
@@ -233,10 +221,6 @@ public class PersonasJpaController implements Serializable {
                 idGeneroNew = em.getReference(idGeneroNew.getClass(), idGeneroNew.getIdGenero());
                 personas.setIdGenero(idGeneroNew);
             }
-            if (idPerfilNew != null) {
-                idPerfilNew = em.getReference(idPerfilNew.getClass(), idPerfilNew.getIdPerfil());
-                personas.setIdPerfil(idPerfilNew);
-            }
             if (tipoDocumentoNew != null) {
                 tipoDocumentoNew = em.getReference(tipoDocumentoNew.getClass(), tipoDocumentoNew.getIdTipoDoc());
                 personas.setTipoDocumento(tipoDocumentoNew);
@@ -287,14 +271,6 @@ public class PersonasJpaController implements Serializable {
             if (idGeneroNew != null && !idGeneroNew.equals(idGeneroOld)) {
                 idGeneroNew.getPersonasList().add(personas);
                 idGeneroNew = em.merge(idGeneroNew);
-            }
-            if (idPerfilOld != null && !idPerfilOld.equals(idPerfilNew)) {
-                idPerfilOld.getPersonasList().remove(personas);
-                idPerfilOld = em.merge(idPerfilOld);
-            }
-            if (idPerfilNew != null && !idPerfilNew.equals(idPerfilOld)) {
-                idPerfilNew.getPersonasList().add(personas);
-                idPerfilNew = em.merge(idPerfilNew);
             }
             if (tipoDocumentoOld != null && !tipoDocumentoOld.equals(tipoDocumentoNew)) {
                 tipoDocumentoOld.getPersonasList().remove(personas);
@@ -407,11 +383,6 @@ public class PersonasJpaController implements Serializable {
             if (idGenero != null) {
                 idGenero.getPersonasList().remove(personas);
                 idGenero = em.merge(idGenero);
-            }
-            Perfiles idPerfil = personas.getIdPerfil();
-            if (idPerfil != null) {
-                idPerfil.getPersonasList().remove(personas);
-                idPerfil = em.merge(idPerfil);
             }
             TiposDocumentos tipoDocumento = personas.getTipoDocumento();
             if (tipoDocumento != null) {

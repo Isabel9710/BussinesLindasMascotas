@@ -199,7 +199,7 @@ public class ModulosJpaController implements Serializable {
             em.close();
         }
     }
-
+    
     public Modulos buscarModuloNombre(String nombreModulo) {
         EntityManager em = getEntityManager();
         
@@ -212,7 +212,7 @@ public class ModulosJpaController implements Serializable {
             return null;
         }finally{
             em.close();
-        }
+}
     }
     
 }

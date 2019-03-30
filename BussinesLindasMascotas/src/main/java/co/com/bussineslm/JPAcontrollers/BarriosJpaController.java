@@ -251,7 +251,7 @@ public class BarriosJpaController implements Serializable {
             em.close();
         }
     }
-
+    
     public Barrios buscarBarrioNombre(String nombreBarrio) {
         EntityManager em = getEntityManager();
         
@@ -264,7 +264,7 @@ public class BarriosJpaController implements Serializable {
             return null;
         }finally{
             em.close();
-        }
+}
     }
     
 }

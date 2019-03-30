@@ -230,7 +230,6 @@ public class SetDataToBD {
         PersonasJpaController ctrl = new PersonasJpaController(JPAFactory.getFACTORY());
         GenerosJpaController ctrlGenero = new GenerosJpaController(JPAFactory.getFACTORY());
         BarriosJpaController ctrlBarrio = new BarriosJpaController(JPAFactory.getFACTORY());
-        PerfilesJpaController ctrlPerfil = new PerfilesJpaController(JPAFactory.getFACTORY());
         
         Personas persona = ctrl.findPersonas(1020);
         
@@ -238,7 +237,6 @@ public class SetDataToBD {
             if(persona == null){
                 Generos g = ctrlGenero.buscarGeneroNombre("MASCULINO");
                 Barrios b = ctrlBarrio.buscarBarrioNombre("BELEN");
-                Perfiles perf = ctrlPerfil.buscarPerfilNombre("SU");
                 
                 persona = new Personas();
                 persona.setIdentificacion(1020);
@@ -250,7 +248,6 @@ public class SetDataToBD {
                 persona.setDireccion("RODEO ALTO");
                 persona.setTelefonoFijo("5776165");
                 persona.setTelefonoMovil("3013958651");
-                persona.setIdPerfil(perf);
                 persona.setEstado(true);
                 
                 ctrl.create(persona);
@@ -261,7 +258,11 @@ public class SetDataToBD {
     
     private List<Modulos> listaModulos() {
         List<Modulos> modulos = new ArrayList<>();
-        
+        List<SubModulos> maestrosSubMod = new ArrayList<SubModulos>(){
+            {
+                add(new SubModulos());
+            }
+        };
         
      
         return modulos;
