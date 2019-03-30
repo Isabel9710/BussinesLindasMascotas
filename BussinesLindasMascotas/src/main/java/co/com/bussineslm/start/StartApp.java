@@ -13,18 +13,18 @@ public class StartApp implements ServletContextListener{
     public void contextInitialized(ServletContextEvent sce) {
         
         try {
-            SetDataToBD.setTipoDocumento();
-            SetDataToBD.setGenero();
-            SetDataToBD.setPais();
-            SetDataToBD.setDepartamento();
-            SetDataToBD.setCiudad();
-            SetDataToBD.setBarrio();
-            SetDataToBD.setPerfil();
-            SetDataToBD.setPersona();
+//            SetDataToBD.setTipoDocumento();
+//            SetDataToBD.setGenero();
+//            SetDataToBD.setPais();
+//            SetDataToBD.setDepartamento();
+//            SetDataToBD.setCiudad();
+//            SetDataToBD.setBarrio();
+//            SetDataToBD.setPerfil();
+//            SetDataToBD.setPersona();
             SetDataToBD.setUsuario();
-            SetDataToBD.setPermisos();
             SetDataToBD.setModulos();
-            SetDataToBD.setSubModulos();
+            SetDataToBD.setPermisos();        
+//            SetDataToBD.setSubModulos();
         } catch (Exception ex) {
             Logger.getLogger(StartApp.class.getName()).log(Level.SEVERE, null, ex);
         }

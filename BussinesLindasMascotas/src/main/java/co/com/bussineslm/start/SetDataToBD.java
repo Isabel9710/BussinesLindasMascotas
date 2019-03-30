@@ -22,10 +22,12 @@ import co.com.bussineslm.entities.Generos;
 import co.com.bussineslm.entities.Modulos;
 import co.com.bussineslm.entities.Paises;
 import co.com.bussineslm.entities.Perfiles;
+import co.com.bussineslm.entities.Permisos;
 import co.com.bussineslm.entities.Personas;
 import co.com.bussineslm.entities.Rol;
 import co.com.bussineslm.entities.SubModulos;
 import co.com.bussineslm.entities.TiposDocumentos;
+import co.com.bussineslm.entities.Usuarios;
 import co.com.bussineslm.utilities.JPAFactory;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,6 +46,62 @@ public class SetDataToBD {
             }  
         };
     }
+    
+    public static void setUsuario() {
+        UsuariosJpaController ctrl = new UsuariosJpaController(JPAFactory.getFACTORY());
+        
+        try {
+                 
+            Usuarios usuario = ctrl.findUsuarios("lindasmascotasmed@gmail.com");
+            if (usuario == null){
+                
+              usuario = new Usuarios(); 
+              usuario.setCorreoElectronico("lindasmascotas@gmail.com");
+              usuario.setIdUsuario(new Personas(1020));
+              usuario.setContraseña("12345MVI");
+              usuario.setEstado(true);
+              usuario.setRol("SU");
+              
+              ctrl.create(usuario);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(SetDataToBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void setModulos() {
+        ModulosJpaController ctrl = new ModulosJpaController(JPAFactory.getFACTORY());
+        
+        Modulos mod = ctrl.buscarModuloNombre("");
+        
+        try {
+            if(mod == null){
+                mod = new Modulos();
+//                mod.setNombreModulo("PERSONAS");
+//                mod.setNombreModulo("MASCOTAS");
+//                mod.setNombreModulo("HISTORIA CLINICA");
+//                mod.setNombreModulo("CITAS");
+//                mod.setNombreModulo("SERVICIOS");
+                
+                ctrl.create(mod);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(SetDataToBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    public static void setPermisos() {
+        PermisosJpaController ctrl = new PermisosJpaController(JPAFactory.getFACTORY());
+        
+        try {
+            
+            
+        } catch (Exception e) {
+        }
+    }
+    
+    
 
     public static void setTipoDocumento() {
         TiposDocumentosJpaController ctrl = new TiposDocumentosJpaController(JPAFactory.getFACTORY());
@@ -154,12 +212,12 @@ public class SetDataToBD {
     public static void setPerfil() {
         PerfilesJpaController ctrl = new PerfilesJpaController(JPAFactory.getFACTORY());
         
-        Perfiles perf = ctrl.buscarPerfilNombre("ADMINISTRADOR");
+        Perfiles perf = ctrl.buscarPerfilNombre("SU");
         
         try {
             if(perf == null){
                 perf = new Perfiles();
-                perf.setNombrePerfil("ADMINISTRADOR");
+                perf.setNombrePerfil("SU");
                 
                 ctrl.create(perf);
             }
@@ -180,7 +238,7 @@ public class SetDataToBD {
             if(persona == null){
                 Generos g = ctrlGenero.buscarGeneroNombre("MASCULINO");
                 Barrios b = ctrlBarrio.buscarBarrioNombre("BELEN");
-                Perfiles perf = ctrlPerfil.buscarPerfilNombre("ADMINISTRADOR");
+                Perfiles perf = ctrlPerfil.buscarPerfilNombre("SU");
                 
                 persona = new Personas();
                 persona.setIdentificacion(1020);
@@ -195,81 +253,17 @@ public class SetDataToBD {
                 persona.setIdPerfil(perf);
                 persona.setEstado(true);
                 
+                ctrl.create(persona);
             }
         } catch (Exception e) {
         }     
     }
-
-    public static void setUsuario() {
-        UsuariosJpaController ctrl = new UsuariosJpaController(JPAFactory.getFACTORY());
-    }
-
-    public static void setPermisos() {
-        PermisosJpaController ctrl = new PermisosJpaController(JPAFactory.getFACTORY());
+    
+    private List<Modulos> listaModulos() {
+        List<Modulos> modulos = new ArrayList<>();
         
         
-    }
-
-    public static void setModulos() {
-        ModulosJpaController ctrl = new ModulosJpaController(JPAFactory.getFACTORY());
-        
-        Modulos mod = ctrl.buscarModuloNombre("");
-        
-        try {
-            if(mod == null){
-                mod = new Modulos();
-//                mod.setNombreModulo("PERSONAS");
-//                mod.setNombreModulo("MASCOTAS");
-//                mod.setNombreModulo("HISTORIA CLINICA");
-//                mod.setNombreModulo("CITAS");
-//                mod.setNombreModulo("SERVICIOS");
-                
-                ctrl.create(mod);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(SetDataToBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }
-
-    public static void setSubModulos() {
-        SubModulosJpaController ctrl = new SubModulosJpaController(JPAFactory.getFACTORY());
-        
-        SubModulos subm = ctrl.buscarSubModuloNombre("");
-        
-        try {
-            if(subm == null){
-                subm = new SubModulos();
-//                subm.setNombreSubmodulo("PERMISOS");
-//                subm.setNombreSubmodulo("PERFILES");
-//                subm.setNombreSubmodulo("GENEROS");
-//                subm.setNombreSubmodulo("TIPO DOCUMENTO");
-//                subm.setNombreSubmodulo("CARGOS");
-//                subm.setNombreSubmodulo("TIPO CONTRATO");
-//                subm.setNombreSubmodulo("TURNOS");
-//                subm.setNombreSubmodulo("BARRIOS");
-//                subm.setNombreSubmodulo("CIUDADES");
-//                subm.setNombreSubmodulo("DEPARTAMENTOS");
-//                subm.setNombreSubmodulo("PAISES");
-//                subm.setNombreSubmodulo("SEXO");
-//                subm.setNombreSubmodulo("RAZAS");
-//                subm.setNombreSubmodulo("ESPECIE");
-//                subm.setNombreSubmodulo("TIPOS SERVICIOS");
-//                subm.setNombreSubmodulo("ESTADOS CITA");
-//                subm.setNombreSubmodulo("SERVICIOS POR EMPLEADO");
-//                subm.setNombreSubmodulo("TURNOS POR EMPLEADO");
-//                subm.setNombreSubmodulo("DETALLE TURNOS");
-//                subm.setNombreSubmodulo("TURNOS");
-//                subm.setNombreSubmodulo("INFORMACIÓN LABORAL");
-//                subm.setNombreSubmodulo("USUARIOS");
-                
-                
-                //subm.setIdModulo(new Modulos(""));
-                
-                ctrl.create(subm);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(SetDataToBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+     
+        return modulos;
+    }  
 }
