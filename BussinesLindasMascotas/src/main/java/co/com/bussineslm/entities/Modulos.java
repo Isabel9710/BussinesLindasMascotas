@@ -37,6 +37,17 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "Modulos.findByNombreModulo", query = "SELECT m FROM Modulos m WHERE m.nombreModulo = :nombreModulo")})
 public class Modulos implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "nombreCtrl")
+    private String nombreCtrl;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "icono")
+    private String icono;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,9 +69,11 @@ public class Modulos implements Serializable {
         this.idModulo = idModulo;
     }
 
-    public Modulos(Integer idModulo, String nombreModulo) {
-        this.idModulo = idModulo;
+    public Modulos(String nombreModulo, String nombreCtrl, String icono, List<SubModulos> subModulosList) {
         this.nombreModulo = nombreModulo;
+        this.nombreCtrl = nombreCtrl;
+        this.icono = icono;
+        this.subModulosList = subModulosList;
     }
 
     public Integer getIdModulo() {
@@ -112,6 +125,22 @@ public class Modulos implements Serializable {
     @Override
     public String toString() {
         return "co.com.bussineslm.entities.Modulos[ idModulo=" + idModulo + " ]";
+    }
+
+    public String getNombreCtrl() {
+        return nombreCtrl;
+    }
+
+    public void setNombreCtrl(String nombreCtrl) {
+        this.nombreCtrl = nombreCtrl;
+    }
+
+    public String getIcono() {
+        return icono;
+    }
+
+    public void setIcono(String icono) {
+        this.icono = icono;
     }
     
 }

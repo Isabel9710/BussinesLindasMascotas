@@ -260,10 +260,52 @@ public class SetDataToBD {
         List<Modulos> modulos = new ArrayList<>();
         List<SubModulos> maestrosSubMod = new ArrayList<SubModulos>(){
             {
-                add(new SubModulos());
+                add(new SubModulos("Paises", "paises"));
+                add(new SubModulos("Departamentos", "departamentos"));
+                add(new SubModulos("Ciudades", "ciudades"));
+                add(new SubModulos("Barrios", "barrios"));
+                add(new SubModulos("Tipos de Documento", "tiposDocumento"));
+                add(new SubModulos("Generos", "generos"));
+                add(new SubModulos("Cargos", "cargos"));
+                add(new SubModulos("Perfiles", "perfiles"));
+                add(new SubModulos("Tipos de Contrato", "tiposContrato"));
+                add(new SubModulos("Especies", "especies"));
+                add(new SubModulos("Razas", "razas"));
+                add(new SubModulos("Sexos", "sexos"));
+                add(new SubModulos("Turnos", "turnos"));
+                add(new SubModulos("Servicios", "servicios"));
+                add(new SubModulos("Estado de Citas", "estadoCitas"));
+                add(new SubModulos("Modulos", "modulos"));
+                add(new SubModulos("SubModulos", "submodulos"));
             }
         };
         
+        List<SubModulos> registrosSubMod = new ArrayList<SubModulos>(){
+            {
+                add(new SubModulos("Personas", "personas"));
+                add(new SubModulos("Información Laboral", "informacionLaboral"));
+                add(new SubModulos("Usuarios", "usuarios"));
+                add(new SubModulos("Mascotas", "mascotas"));
+                add(new SubModulos("Servicios por Empleados", "serviciosEmpleados"));
+                add(new SubModulos("Turnos por Empleados", "turnosEmpleados"));
+            }
+        };
+        
+        List<SubModulos> solicitarCitaSubMod = new ArrayList<SubModulos>(){
+            {
+                add(new SubModulos("Citas", "citas"));
+                add(new SubModulos("Citas del Empleado", "citasEmpleado"));
+            }
+        };
+        
+        
+        Modulos maestros = new Modulos("Maestros", "maestros", "puzzle-piece", maestrosSubMod);
+        Modulos registros = new Modulos("Registros", "registros", "pencil-square-o", registrosSubMod );
+        Modulos solicitarCita = new Modulos("Solicitar Citas", "solicitarcita", "calendar", solicitarCitaSubMod );
+        
+        modulos.add(maestros);
+        modulos.add(registros);
+        modulos.add(solicitarCita);
      
         return modulos;
     }  

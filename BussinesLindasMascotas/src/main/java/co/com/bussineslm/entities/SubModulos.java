@@ -39,6 +39,12 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "SubModulos.findByNombreSubmodulo", query = "SELECT s FROM SubModulos s WHERE s.nombreSubmodulo = :nombreSubmodulo")})
 public class SubModulos implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "nombreCtrl")
+    private String nombreCtrl;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,9 +69,9 @@ public class SubModulos implements Serializable {
         this.idSubmodulo = idSubmodulo;
     }
 
-    public SubModulos(Integer idSubmodulo, String nombreSubmodulo) {
-        this.idSubmodulo = idSubmodulo;
+    public SubModulos(String nombreSubmodulo, String nombreCtrl) {
         this.nombreSubmodulo = nombreSubmodulo;
+        this.nombreCtrl = nombreCtrl;
     }
 
     public Integer getIdSubmodulo() {
@@ -125,6 +131,14 @@ public class SubModulos implements Serializable {
     @Override
     public String toString() {
         return "co.com.bussineslm.entities.SubModulos[ idSubmodulo=" + idSubmodulo + " ]";
+    }
+
+    public String getNombreCtrl() {
+        return nombreCtrl;
+    }
+
+    public void setNombreCtrl(String nombreCtrl) {
+        this.nombreCtrl = nombreCtrl;
     }
     
 }

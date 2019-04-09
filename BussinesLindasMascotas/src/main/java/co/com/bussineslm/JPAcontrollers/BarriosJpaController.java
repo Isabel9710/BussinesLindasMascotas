@@ -264,7 +264,7 @@ public class BarriosJpaController implements Serializable {
             return null;
         }finally{
             em.close();
-}
+        }
     }
     
 }

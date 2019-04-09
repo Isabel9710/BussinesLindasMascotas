@@ -13,6 +13,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import co.com.bussineslm.entities.Personas;
+import co.com.bussineslm.entities.Perfiles;
 import co.com.bussineslm.entities.Usuarios;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -43,10 +44,19 @@ public class UsuariosJpaController implements Serializable {
                 idUsuario = em.getReference(idUsuario.getClass(), idUsuario.getIdentificacion());
                 usuarios.setIdUsuario(idUsuario);
             }
+            Perfiles idPerfil = usuarios.getIdPerfil();
+            if (idPerfil != null) {
+                idPerfil = em.getReference(idPerfil.getClass(), idPerfil.getIdPerfil());
+                usuarios.setIdPerfil(idPerfil);
+            }
             em.persist(usuarios);
             if (idUsuario != null) {
                 idUsuario.getUsuariosList().add(usuarios);
                 idUsuario = em.merge(idUsuario);
+            }
+            if (idPerfil != null) {
+                idPerfil.getUsuariosList().add(usuarios);
+                idPerfil = em.merge(idPerfil);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -69,9 +79,15 @@ public class UsuariosJpaController implements Serializable {
             Usuarios persistentUsuarios = em.find(Usuarios.class, usuarios.getCorreoElectronico());
             Personas idUsuarioOld = persistentUsuarios.getIdUsuario();
             Personas idUsuarioNew = usuarios.getIdUsuario();
+            Perfiles idPerfilOld = persistentUsuarios.getIdPerfil();
+            Perfiles idPerfilNew = usuarios.getIdPerfil();
             if (idUsuarioNew != null) {
                 idUsuarioNew = em.getReference(idUsuarioNew.getClass(), idUsuarioNew.getIdentificacion());
                 usuarios.setIdUsuario(idUsuarioNew);
+            }
+            if (idPerfilNew != null) {
+                idPerfilNew = em.getReference(idPerfilNew.getClass(), idPerfilNew.getIdPerfil());
+                usuarios.setIdPerfil(idPerfilNew);
             }
             usuarios = em.merge(usuarios);
             if (idUsuarioOld != null && !idUsuarioOld.equals(idUsuarioNew)) {
@@ -81,6 +97,14 @@ public class UsuariosJpaController implements Serializable {
             if (idUsuarioNew != null && !idUsuarioNew.equals(idUsuarioOld)) {
                 idUsuarioNew.getUsuariosList().add(usuarios);
                 idUsuarioNew = em.merge(idUsuarioNew);
+            }
+            if (idPerfilOld != null && !idPerfilOld.equals(idPerfilNew)) {
+                idPerfilOld.getUsuariosList().remove(usuarios);
+                idPerfilOld = em.merge(idPerfilOld);
+            }
+            if (idPerfilNew != null && !idPerfilNew.equals(idPerfilOld)) {
+                idPerfilNew.getUsuariosList().add(usuarios);
+                idPerfilNew = em.merge(idPerfilNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -115,6 +139,11 @@ public class UsuariosJpaController implements Serializable {
             if (idUsuario != null) {
                 idUsuario.getUsuariosList().remove(usuarios);
                 idUsuario = em.merge(idUsuario);
+            }
+            Perfiles idPerfil = usuarios.getIdPerfil();
+            if (idPerfil != null) {
+                idPerfil.getUsuariosList().remove(usuarios);
+                idPerfil = em.merge(idPerfil);
             }
             em.remove(usuarios);
             em.getTransaction().commit();
